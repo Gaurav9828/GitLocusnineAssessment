@@ -9,6 +9,7 @@ import { UsersComponent } from './view/users/users.component';
 import { UserService } from './service/user.service';
 import { UserServiceImpl } from './service/user.service.impl';
 import { NavbarComponent } from './view/navbar/navbar.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NavbarComponent } from './view/navbar/navbar.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ],
   providers: [
     {provide: UserService, useClass: UserServiceImpl},

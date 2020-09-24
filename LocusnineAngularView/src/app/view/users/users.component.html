@@ -28,7 +28,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">NAME</th>
+                <th scope="col">NAME &nbsp;<img src="../../assets/images/ico_sorting.svg" alt="icon"></th>
                 <th scope="col">EMAIL</th>
                 <th scope="col">ROLE TYPE</th>
                 <th scope="col">STATUS</th>
@@ -36,7 +36,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let userDetails of userDetailsList;">
+            <tr *ngFor="let userDetails of userDetailsList | paginate: config">
                 <td>{{userDetails.name}}</td>
                 <td>{{userDetails.email}}</td>
                 <td>{{userDetails.roleType}}</td>
@@ -70,6 +70,15 @@
                         (click)="initiateUpdateUserDetails(userDetails.id)" style="font-size: small;">
                         <img src="../../assets/images/ico_edit.svg" alt="icon">
                     </button></td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <pagination-controls [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide"
+                    [responsive]="responsive" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                    [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                    [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)">
+                </pagination-controls>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -150,7 +159,8 @@
             <div class="modal-header">
                 <div>
                     <h5 class="modal-title" id="exampleModalLongTitle">Update User</h5>
-                    <a *ngIf = "!deleteConfirm" class="small" href="#" data-toggle="modal" data-target="#confirmation" (click) = "initiateDeleteUser()">Delete</a>
+                    <a *ngIf="!deleteConfirm" class="small" href="#" data-toggle="modal" data-target="#confirmation"
+                        (click)="initiateDeleteUser()">Delete</a>
                     <p class="small text-success" *ngIf="successMessage != ''">{{successMessage}}</p>
                     <p class="small text-danger" *ngIf="errorMessage != ''">{{errorMessage}}</p>
                 </div>
@@ -170,7 +180,8 @@
                         <div class="col-md-12">
                             <div class="input-group input-group-sm mb-3">
                                 <input type="text" formControlName="email" class="form-control" placeholder="Email"
-                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.email.errors }" disabled/>
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.email.errors }"
+                                    disabled />
                             </div>
                         </div>
 
@@ -259,13 +270,15 @@
 
                             <div class="col-md-12">
                                 <div class="input-group input-group-sm mb-3">
-                                    <input type="number" formControlName="mobileNumber" placeholder = "Moble Number (Optional)" disabled />
+                                    <input type="number" formControlName="mobileNumber"
+                                        placeholder="Moble Number (Optional)" disabled />
                                 </div>
                             </div>
-                            <div class="col-md-12" *ngIf = "updateConfirmation">
+                            <div class="col-md-12" *ngIf="updateConfirmation">
                                 <div class="input-group input-group-sm mb-3">
                                     <select class="form-control" formControlName="status"
-                                        [ngClass]="{ 'is-invalid': submitted && newUserFormValues.status.errors }" disabled>
+                                        [ngClass]="{ 'is-invalid': submitted && newUserFormValues.status.errors }"
+                                        disabled>
                                         <option value="A">Active</option>
                                         <option value="I">Inactive</option>
                                         <option value="P">Pending</option>

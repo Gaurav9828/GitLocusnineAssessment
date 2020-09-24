@@ -11,24 +11,47 @@ import *  as  messageData from 'src/assets/JSON/messages.json';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
-  constructor(private userService: UserService, private formBuilder: FormBuilder) { 
-  }
-  userDetailsList: UserDetails[];
-  userDetails: UserDetails;
-  newUserForm: FormGroup;
-  submitted = false;
-  addConfirmation = false;
-  updateConfirmation = false;
-  deleteConfirm = false;
-  userExistFlag: boolean = false;
+  public userDetailsList: UserDetails[] = new Array<UserDetails>();
+  public userDetails: UserDetails;
+  public newUserForm: FormGroup;
+  public submitted = false;
+  public addConfirmation = false;
+  public updateConfirmation = false;
+  public deleteConfirm = false;
+  public userExistFlag: boolean = false;
 
   private message: any = (messageData as any).default;
   successMessage = '';
   errorMessage = '';
+  public maxSize: number = 7;
+  public directionLinks: boolean = true;
+  public autoHide: boolean = false;
+  public responsive: boolean = true;
+  public labels: any = {
+      previousLabel: '<--',
+      nextLabel: '-->',
+      screenReaderPaginationLabel: 'Pagination',
+      screenReaderPageLabel: 'page',
+      screenReaderCurrentLabel: `You're on page`
+  };
+
+  config = {
+    itemsPerPage: 8,
+    currentPage: 1,
+    totalItems: this.userDetailsList.length
+  };
+
+  constructor(private userService: UserService, private formBuilder: FormBuilder) {
+    this.getUserDetailsList(); 
+  }
+
+  onPageChange(event){
+    console.log(event);
+    this.config.currentPage = event;
+  }
+  
 
   ngOnInit(): void {
-    this.getUserDetailsList();
     this.deleteConfirm = false;
     this.newUserForm = this.formBuilder.group({
       name: ['', Validators.required],
