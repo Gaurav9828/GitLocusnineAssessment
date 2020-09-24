@@ -1,0 +1,48 @@
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+  <a href="https://www.locusnine.com/"><img src="../../assets/images/Logo.svg" alt="icon"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item col px-md-5">
+        <a href="https://www.locusnine.com/" class="navbar-brand"><img src="../../assets/images/ico_dashboard.svg" alt="icon">
+          <div class="d-inline p-2 text-white">Dashboard</div>
+        </a>        
+      </li>
+      <li class="nav-item col px-md-5">
+        <a href="" class="navbar-brand"><img src="../../assets/images/ico_users.svg" alt="icon">
+          <div class="d-inline p-2 text-white">Users</div>
+        </a>  
+        
+      </li>
+      <li class="nav-item col px-md-5">
+        <a href="" class="navbar-brand"><img src="../../assets/images/ico_sessionmanager.svg" alt="icon">
+          <div class="d-inline p-2 text-white">Session Manager</div>
+        </a>        
+      </li>
+    </ul>
+  </div>
+
+  <div class="collapse navbar-collapse " id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><img src="../../assets/images/ico_notification.svg" alt="icon"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><img src="../../assets/images/ico_user.svg" alt="icon"></a>
+      </li>
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Gaurav
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <button class="dropdown-item" (click)="navigationPage('admin/login')" style="font-size: small;">Profile</button>
+          <button class="dropdown-item" (click)="navigationPage('student/login')" style="font-size: small;">Logout</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

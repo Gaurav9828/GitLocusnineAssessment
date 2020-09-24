@@ -1,0 +1,61 @@
+{
+    "http.value":"http://",
+    "host.name":"localhost:",
+    "port.number":"7070/",
+    "server.name":"API_SCHOOL/",
+
+    "admin.login":"admin/login",
+    "user.menu.list":"menu/list",
+    
+    "admin.employee.save":"admin/employee/save",
+    "admin.employee.address.save":"admin/employee/address/save",
+    "admin.employee.qualification.save":"admin/employee/qualification/save",
+
+    "admin.get.employee.id":"admin/getEmployee/id/",
+    "admin.get.employee.email.id":"admin/getEmployee/emailId",
+    "admin.get.employee.address.details.id":"admin/getEmployee/address/details/id/",
+    "admin.get.employee.qualification.id":"admin/getEmployee/qualification/id",
+    "admin.get.all.employees.details.list":"admin/getEmployees/details/list",
+    "admin.get.all.employees.address.list":"admin/getAllEmployees/address/list",
+    "admin.get.all.employees.qualification.list":"admin/getAllEmployees/qualification/list",
+    "admin.get.exam.details.exam.code":"admin/get/exam/details/exam/code",
+    "admin.get.list.exam.details.by.user.id":"admin/list/exam/details/by/user/id/",
+    "admin.get.list.question.details.by.exam.id":"admin/list/question/details/by/exam/id/",
+    "admin.get.list.Exam.details.by.user.level":"admin/list/exam/details/by/user/level/",
+    "admin.get.student.personal.details.by.identity.number":"admin/get/student/personal/details/by/identity/number/",
+    "admin.get.class.details.by.employee.id":"admin/class/details/by/employee/id/",
+    "admin.get.student.personal.details.by.student.id":"admin/get/student/personal/details/by/student/id/",
+    "admin.get.student.all.details.by.student.id":"admin/get/student/all/details/by/student/id/",
+
+    "common.get.exam.result.details.by.user.id":"common/list/exam/result/details/by/user/id/",
+    "common.get.exam.result.details.with.exam.details.by.user.id":"common/list/exam/result/details/with/exam/details/by/user/id/",
+    "common.get.class.details.list":"common/get/class/details/list",
+    "common.get.students.all.details.list.by.class.attr":"common/get/student/all/details/list/by/class/attr/",
+    "common.get.list.transaction.details.by.student.id":"common/get/list/transaction/details/by/student/id/",
+    "common.get.list.fee.structure.details.by.class.level":"common/get/list/fee/structure/details/by/class/level/",
+
+    "admin.set.exam.details.save":"admin/exam/details/save",
+    "admin.set.question.details.save":"admin/question/details/save",
+    "admin.set.list.question.details.save":"admin/list/question/details/save",
+    "common.set.exam.result.details.save":"common/exam/result/details/save",
+    "admin.set.employee.details.new.pass.update":"admin/employee/details/new/pass/update",
+    "admin.set.employee.reset.password.update":"admin/employee/reset/password/update",
+    "admin.set.employee.details.update":"admin/employee/details/update",
+    "admin.set.employee.addrerss.details.update":"admin/employee/address/details/update",
+
+    "admin.save.student.personal.details":"admin/save/student/personal/details",
+    "admin.save.student.address.details":"admin/save/student/address/details",
+    "admin.save.student.parent.details":"admin/save/student/parent/details",
+    "common.save.transaction.details":"common/transaction/details/save",
+
+    "admin.question.details.update":"admin/question/details/update",
+    "admin.exam.details.update":"admin/exam/details/update",
+
+    "common.payment.paytm.initiate":"common/payment/paytm/initiate",
+    "common.fee.structure.details.save":"common/fee/structure/details/save",
+    "common.fee.structure.details.update":"common/fee/structure/details/update",
+    "common.get.list.fee.structure.details":"common/get/list/fee/structure/details",
+
+    "student.login":"student/login"
+    
+}

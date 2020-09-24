@@ -1,0 +1,13 @@
+{
+    "update.successfull" : "Update Successfull",
+    "delete.successfull" : "Delete Successfull",
+    "update.failed" : "Update User Failed! Please try again.",
+    "delete.failed" : "Delete User Failed! Please try again.",
+
+    "add.user.successfull": "User added successfully",
+    "add.user.failed": "Add User Failed! Please try again.",
+
+    "user.already.exist" : "Add User Failed! User already exist.",
+
+    "server.error": "Server error occurred."
+}

@@ -1,0 +1,292 @@
+<app-navbar></app-navbar>
+<br>
+<div class="mx-auto bg-white" style="width: 95%;">
+    <nav class="navbar navbar-white bg-white justify-content-between">
+        <div class="navbar-brand"><img src="../../assets/images/ico_users.svg" alt="icon">
+            <div class="d-inline p-2 text-dark">Users</div>
+        </div>
+        <div class="form-inline">
+            <div class="d-inline px-md-3">
+                <div class="input-group mb-1">
+                    <input type="text" class="form-control" placeholder="search" aria-label="search">
+                    <div class="input-group-append">
+                        <span class="input-group-text bg-white"><img src="../../assets/images/ico_search.svg"
+                                alt="icon"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-inline px-md-3">
+                <button class="btn btn-warning" (click)="addNewUser()" data-toggle="modal" data-target="#addUserModal">
+                    <div class="text-white">
+                        <img src="../../assets/images/ico_add.svg" alt="icon">Add User
+                    </div>
+                </button>
+            </div>
+        </div>
+
+    </nav>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">NAME</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">ROLE TYPE</th>
+                <th scope="col">STATUS</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let userDetails of userDetailsList;">
+                <td>{{userDetails.name}}</td>
+                <td>{{userDetails.email}}</td>
+                <td>{{userDetails.roleType}}</td>
+                <td>
+                    <div *ngIf="userDetails.status == 'A'">
+                        <div class="d-inline">
+                            <img src="../../assets/images/ico_active.svg" alt="icon">
+                        </div>
+                        <div class="d-inline">
+                            Active
+                        </div>
+                    </div>
+                    <div *ngIf="userDetails.status == 'I'">
+                        <div class="d-inline">
+                            <img src="../../assets/images/ico_inactive.svg" alt="icon">
+                        </div>
+                        <div class="d-inline">
+                            Inactive
+                        </div>
+                    </div>
+                    <div *ngIf="userDetails.status == 'P'">
+                        <div class="d-inline">
+                            <img src="../../assets/images/ico_pending.svg" alt="icon">
+                        </div>
+                        <div class="d-inline">
+                            Pending
+                        </div>
+                    </div>
+                </td>
+                <td><button class="border-0 bg-transparent" data-toggle="modal" data-target="#updateUserModal"
+                        (click)="initiateUpdateUserDetails(userDetails.id)" style="font-size: small;">
+                        <img src="../../assets/images/ico_edit.svg" alt="icon">
+                    </button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+                    <p class="small text-success" *ngIf="successMessage != ''">{{successMessage}}</p>
+                    <p class="small text-danger" *ngIf="errorMessage != ''">{{errorMessage}}</p>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../assets/images/ico_close.svg" alt="icon">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="newUserForm" (ngSubmit)="addUserConfirmation(newUserForm)">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <input type="text" formControlName="name" class="form-control" placeholder="Name"
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.name.errors }" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="roleType"
+                                    id="inlineRadio1" value="Admin"
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.roleType.errors }"
+                                    checked>
+                                <label class="form-check-label" for="inlineRadio1">Admin</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="roleType"
+                                    id="inlineRadio2" value="Customer Executive"
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.roleType.errors }">
+                                <label class="form-check-label" for="inlineRadio2">Customer Executive</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <input type="number"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                    type="number" maxlength="10" formControlName="mobileNumber" class="form-control"
+                                    placeholder="Mobile Number (Optional)"
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.mobileNumber.errors }" />
+                            </div>
+                        </div>
+                        <div class="col-md-12" *ngIf="!newUserFormValues.name.errors &&
+                                                      !newUserFormValues.roleType.errors">
+                            <div class="input-group input-group-sm mb-3">
+                                <button class="btn btn-warning btn-lg btn-block" type="submit" data-toggle="modal"
+                                    data-target="#confirmation">
+                                    <div class="text-white">
+                                        Add User
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Update User</h5>
+                    <a *ngIf = "!deleteConfirm" class="small" href="#" data-toggle="modal" data-target="#confirmation" (click) = "initiateDeleteUser()">Delete</a>
+                    <p class="small text-success" *ngIf="successMessage != ''">{{successMessage}}</p>
+                    <p class="small text-danger" *ngIf="errorMessage != ''">{{errorMessage}}</p>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="../../assets/images/ico_close.svg" alt="icon">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="newUserForm" (ngSubmit)="updateUserConfirmation(newUserForm)">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <input type="text" formControlName="name" class="form-control" placeholder="Name"
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.name.errors }" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <input type="text" formControlName="email" class="form-control" placeholder="Email"
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.email.errors }" disabled/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="roleType"
+                                    id="inlineRadio1" value="Admin" checked>
+                                <label class="form-check-label" for="inlineRadio1">Admin</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="roleType"
+                                    id="inlineRadio2" value="Customer Executive">
+                                <label class="form-check-label" for="inlineRadio2">Customer Executive</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <input type="number"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                    type="number" maxlength="10" formControlName="mobileNumber" class="form-control"
+                                    placeholder="Mobile Number (Optional)"
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.mobileNumber.errors }" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <select class="form-control" formControlName="status"
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.status.errors }">
+                                    <option value="A">Active</option>
+                                    <option value="I">Inactive</option>
+                                    <option value="P">Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" *ngIf="!newUserFormValues.name.errors &&
+                        !newUserFormValues.email.errors &&
+                        !newUserFormValues.roleType.errors">
+                            <div class="input-group input-group-sm mb-3">
+                                <button class="btn btn-warning btn-lg btn-block" type="submit" data-toggle="modal"
+                                    data-target="#confirmation">
+                                    <div class="text-white">
+                                        Update User
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle2">Are you sure?</h5>
+                    <button type="button" (click)="addNewUser()" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="../../assets/images/ico_close.svg" alt="icon">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="newUserForm">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="text" formControlName="name" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="text" formControlName="email" class="form-control" disabled />
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="roleType"
+                                        id="inlineRadio1" value="{{newUserForm.get('roleType').value}}" disabled />
+                                    <div class="text-dark">{{newUserForm.get('roleType').value}}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input type="number" formControlName="mobileNumber" placeholder = "Moble Number (Optional)" disabled />
+                                </div>
+                            </div>
+                            <div class="col-md-12" *ngIf = "updateConfirmation">
+                                <div class="input-group input-group-sm mb-3">
+                                    <select class="form-control" formControlName="status"
+                                        [ngClass]="{ 'is-invalid': submitted && newUserFormValues.status.errors }" disabled>
+                                        <option value="A">Active</option>
+                                        <option value="I">Inactive</option>
+                                        <option value="P">Pending</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input-group input-group-sm mb-3">
+                                    <button type="button" (click)="confirmation()"
+                                        class="btn btn-warning btn-lg btn-block" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <div class="text-white">
+                                            Confirm
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
