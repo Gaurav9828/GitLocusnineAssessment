@@ -16,13 +16,13 @@ namespace LocusnineDataAccess.Service
         OracleParameter oracleParameter;
         SecureServices secureServices;
 
-        public UserServiceImpl()
+        public UserServiceImpl(ConnectionProvider _connectionProvider, SecureServices _secureServices)
         {
-            connectionProvider = new ConnectionProviderImpl();
+            connectionProvider = _connectionProvider;
             oracleConnection = connectionProvider.createNewOracleConnection();
             oracleCommand = oracleConnection.CreateCommand();
             oracleParameter = new OracleParameter();
-            secureServices = new SecureServicesImpl();
+            secureServices = _secureServices;
         }
         bool UserService.deleteUserDetailsByUserId(int id)
         {

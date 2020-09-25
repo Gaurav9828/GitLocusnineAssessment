@@ -17,10 +17,10 @@ namespace LocusnineDataAccess.Controllers
     {
         private UserService userService;
         private SecureServices secureServices;
-        public LoucsnineHomeController()
+        public LoucsnineHomeController(SecureServices _secureServices, UserService _userService)
         {
-            userService = new UserServiceImpl();
-            secureServices = new SecureServicesImpl();
+            userService = _userService;
+            secureServices = _secureServices;
         }
         [HttpGet]
         public IEnumerable<UserDetails> getAllUserDetailsList()
