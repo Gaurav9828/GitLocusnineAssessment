@@ -27,6 +27,9 @@ namespace LocusnineDataAccess
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //Dependency Injected for various custom services 
+            //created by Gaurav Srivastava
             services.AddTransient<UserService, UserServiceImpl>();
             services.AddTransient<SecureServices, SecureServicesImpl>();
             services.AddTransient<ConnectionProvider, ConnectionProviderImpl>();

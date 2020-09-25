@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace LocusnineDataAccess.Models
 {
     public class UserDetails
-    {
+    {            //created by Gaurav Srivastava
+
         public int id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
