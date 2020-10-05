@@ -160,7 +160,7 @@
                 <div>
                     <h5 class="modal-title" id="exampleModalLongTitle">Update User</h5>
                     <a *ngIf="!deleteConfirm" class="small" href="#" data-toggle="modal" data-target="#confirmation"
-                        (click)="initiateDeleteUser()">Delete</a>
+                        (click)="serviceConfigurationByServiceType('deleteUser')">Delete</a>
                     <p class="small text-success" *ngIf="successMessage != ''">{{successMessage}}</p>
                     <p class="small text-danger" *ngIf="errorMessage != ''">{{errorMessage}}</p>
                 </div>

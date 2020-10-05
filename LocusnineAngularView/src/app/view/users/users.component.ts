@@ -27,11 +27,11 @@ export class UsersComponent implements OnInit {
   public autoHide: boolean = false;
   public responsive: boolean = true;
   public labels: any = {
-      previousLabel: '<',
-      nextLabel: '>',
-      screenReaderPaginationLabel: 'Pagination',
-      screenReaderPageLabel: 'page',
-      screenReaderCurrentLabel: `You're on page`
+    previousLabel: '<',
+    nextLabel: '>',
+    screenReaderPaginationLabel: 'Pagination',
+    screenReaderPageLabel: 'page',
+    screenReaderCurrentLabel: `You're on page`
   };
 
   config = {
@@ -41,14 +41,14 @@ export class UsersComponent implements OnInit {
   };
 
   constructor(private userService: UserService, private formBuilder: FormBuilder) {
-    this.getUserDetailsList(); 
+    this.getUserDetailsList();
   }
 
-  onPageChange(event){
+  onPageChange(event) {
     console.log(event);
     this.config.currentPage = event;
   }
-  
+
 
   ngOnInit(): void {
     this.deleteConfirm = false;
@@ -57,28 +57,26 @@ export class UsersComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       mobileNumber: [],
       roleType: ['', Validators.required],
-      status:['A']
+      status: ['A']
     });
 
 
   }
 
-  private getUserDetailsList(){
+  private getUserDetailsList() {
     this.userService.getAllUserDetails().subscribe((data: any[]) => {
-          this.userDetailsList = data;
-        },
-        error => {
-          this.message = this.message['server.error'];
-        }
+      this.userDetailsList = data;
+    },
+      error => {
+        this.message = this.message['server.error'];
+      }
     );
   }
 
   get newUserFormValues() { return this.newUserForm.controls; }
 
-  addNewUser(){
-    this.deleteConfirm = false;
-    this.updateConfirmation = false;
-    this.addConfirmation = true;
+  addNewUser() {
+    this.serviceConfigurationByServiceType('addUser');
     this.submitted = false;
     this.successMessage = "";
     this.errorMessage = "";
@@ -87,11 +85,11 @@ export class UsersComponent implements OnInit {
       email: ['', Validators.email],
       mobileNumber: [],
       roleType: ['', Validators.required],
-      status:['A']
+      status: ['A']
     });
   }
 
-  addUserConfirmation(newUserForm){
+  addUserConfirmation(newUserForm) {
     this.submitted = true;
     if (this.newUserForm.invalid) {
       return;
@@ -101,55 +99,50 @@ export class UsersComponent implements OnInit {
       email: [this.generateUniqueMailId(this.newUserFormValues.name.value)],
       mobileNumber: [this.newUserFormValues.mobileNumber.value],
       roleType: [this.newUserFormValues.roleType.value],
-      status:[this.newUserFormValues.status.value]
+      status: [this.newUserFormValues.status.value]
     });
   }
 
   //Added by Gaurav Srivastava
-  generateUniqueMailId(name: string): string{
+  generateUniqueMailId(newUserName: string): string {
     let newMailIdKey = "";
-    name.toLowerCase().split(' ').forEach(e => { newMailIdKey += e;});
-    for(let userDetails of this.userDetailsList) {
-      if(userDetails.name.toLowerCase() == name.toLowerCase() || userDetails.email.includes(newMailIdKey + "@locusnine.com")){
-        let pos = userDetails.email.split('@')[0].toLowerCase().split(newMailIdKey)[1];
-        if(pos == ''){
-          newMailIdKey += 1;         
-        }else{
-          newMailIdKey += Number(pos) + 1;
+    let num = 0;
+    newUserName = newUserName.toLowerCase();
+    newUserName.split(' ').forEach(e => { newMailIdKey += e; });
+    newUserName = newMailIdKey;
+    for (let userDetails of this.userDetailsList) {
+      if (userDetails.email.includes(newUserName)) {
+        let pos = userDetails.email.split('@')[0].toLowerCase().split(newUserName)[1];
+        let userName = newUserName;
+        num = (Number(pos) == 0 && num == 0) ? 0 : num;
+        if(!(Number(pos) == 0 && num != 0)){
+          num = Number(pos);
+          newMailIdKey = (num != 0) ? userName += num + 1  : userName += 1;
         }
-        break;
       }
     }
     return newMailIdKey + '@locusnine.com';
   }
 
-  initiateUpdateUserDetails(id: number){
-    this.deleteConfirm = false;
-    this.addConfirmation = false;
-    this.updateConfirmation = true;
+  initiateUpdateUserDetails(id: number) {
+    this.serviceConfigurationByServiceType('updateUser');
     this.errorMessage = "";
     this.successMessage = "";
     this.userDetailsList.forEach(element => {
-      if(element.id == id){
+      if (element.id == id) {
         this.newUserForm = this.formBuilder.group({
           id: [element.id],
           name: [element.name],
           email: [element.email],
           mobileNumber: [element.mobileNumber],
           roleType: [element.roleType],
-          status:[element.status]
+          status: [element.status]
         });
       }
     });
   }
 
-  initiateDeleteUser(){
-    this.addConfirmation = false;
-    this.updateConfirmation = false;
-    this.deleteConfirm = true;
-  }
-
-  updateUserConfirmation(newUserForm){
+  updateUserConfirmation(newUserForm) {
     this.submitted = true;
     if (this.newUserForm.invalid) {
       return;
@@ -160,93 +153,93 @@ export class UsersComponent implements OnInit {
       email: [this.newUserFormValues.email.value],
       mobileNumber: [this.newUserFormValues.mobileNumber.value],
       roleType: [this.newUserFormValues.roleType.value],
-      status:[this.newUserFormValues.status.value]
+      status: [this.newUserFormValues.status.value]
     });
   }
 
-  confirmation(){
+  confirmation() {
     this.userDetails = new UserDetails();
     this.userDetails.name = this.newUserFormValues.name.value;
     this.userDetails.email = this.newUserFormValues.email.value;
     this.userDetails.roleType = this.newUserFormValues.roleType.value;
-    if(this.newUserFormValues.mobileNumber.value == null){
+    if (this.newUserFormValues.mobileNumber.value == null) {
       this.userDetails.mobileNumber = '';
-    }else{
+    } else {
       this.userDetails.mobileNumber = String(this.newUserFormValues.mobileNumber.value);
     }
     this.userDetails.status = this.newUserFormValues.status.value;
 
-    if(this.updateConfirmation){
+    if (this.updateConfirmation) {
       this.userDetails.id = this.newUserFormValues.id.value;
       this.updateUserDetails(this.userDetails);
-    }else if(this.addConfirmation){
+    } else if (this.addConfirmation) {
       this.saveUserDetails(this.userDetails);
-    }else if(this.deleteConfirm){
+    } else if (this.deleteConfirm) {
       this.deleteUserDetails(this.newUserFormValues.id.value);
     }
   }
 
-  updateUserDetails(userDetails: UserDetails){
+  updateUserDetails(userDetails: UserDetails) {
     this.userService.updateUserDetails(userDetails).subscribe(
-        data => {
-          if (data == false) {
-            this.successMessage = "";
-            this.errorMessage = this.message['update.failed'];
-            return;
-          }
-          this.errorMessage = "";
-          this.getUserDetailsList();
-          this.successMessage = this.message['update.successfull'];
-        },
-        error => {
-          this.errorMessage = this.message['server.error'];
+      data => {
+        if (data == false) {
+          this.successMessage = "";
+          this.errorMessage = this.message['update.failed'];
+          return;
         }
-      );
+        this.errorMessage = "";
+        this.getUserDetailsList();
+        this.successMessage = this.message['update.successfull'];
+      },
+      error => {
+        this.errorMessage = this.message['server.error'];
+      }
+    );
   }
 
-  saveUserDetails(userDetails: UserDetails){
+  saveUserDetails(userDetails: UserDetails) {
     let id: number = 0;
     this.userExistFlag = false;
     this.errorMessage = "";
     this.successMessage = "";
     this.addConfirmation = false;
     this.userDetailsList.forEach(element => {
-      if(element.id > id){
+      if (element.id > id) {
         id = element.id
       }
     });
     this.userDetailsList.forEach(element => {
-      if(element.email == userDetails.email){
+      if (element.email == userDetails.email) {
         this.userExistFlag = true;
         return;
       }
     });
 
-    if(this.userExistFlag){
-        this.successMessage = "";
-        this.addNewUser();
-        this.errorMessage = this.message['user.already.exist'];
-        return;
+    if (this.userExistFlag) {
+      this.successMessage = "";
+      this.addNewUser();
+      this.errorMessage = this.message['user.already.exist'];
+      return;
     }
     userDetails.id = id + 1;
     this.userService.saveUserDetails(userDetails).subscribe(data => {
-          if (data == false) {
-            this.successMessage = "";
-            this.errorMessage = this.message['add.user.failed'];
-            return;
-          }
-          this.errorMessage = "";
-          this.addNewUser();
-          this.getUserDetailsList();
-          this.successMessage = this.message['add.user.successfull'];
-        },
-        error => {
-          this.errorMessage = this.message['server.error'];
-        }
-      );
+      if (data == false) {
+        this.successMessage = "";
+        this.errorMessage = this.message['add.user.failed'];
+        return;
+      }
+      this.errorMessage = "";
+      this.addNewUser();
+      this.getUserDetailsList();
+      this.successMessage = this.message['add.user.successfull'];
+    },
+      error => {
+        this.errorMessage = this.message['server.error'];
+      }
+    );
   }
 
-  deleteUserDetails(id: number){
+  deleteUserDetails(id: number) {
     this.userService.deleteUserDetails(id).subscribe(
       data => {
         if (data == false) {
@@ -264,6 +257,26 @@ export class UsersComponent implements OnInit {
         this.errorMessage = this.message['server.error'];
       }
     );
+  }
+
+  serviceConfigurationByServiceType(serviceType: string) {
+    this.deleteConfirm = false;
+    this.addConfirmation = false;
+    this.updateConfirmation = false;
+    switch (serviceType) {
+      case 'updateUser': {
+        this.updateConfirmation = true;
+        break;
+      }
+      case 'addUser': {
+        this.addConfirmation = true;
+        break;
+      }
+      case 'deleteUser': {
+        this.deleteConfirm = true;
+        break;
+      }
+    }
   }
 
 }
