@@ -28,8 +28,8 @@ export class UsersComponent implements OnInit {
   public autoHide: boolean = false;
   public responsive: boolean = true;
   public labels: any = {
-      previousLabel: '<--',
-      nextLabel: '-->',
+      previousLabel: '<',
+      nextLabel: '>',
       screenReaderPaginationLabel: 'Pagination',
       screenReaderPageLabel: 'page',
       screenReaderCurrentLabel: `You're on page`
@@ -106,36 +106,22 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  //Added by Gaurav Srivastava
   generateUniqueMailId(name: string): string{
-    let newMailId = "";
-    let pervMailId = "";
-    let max: number = 0;
-    name.toLowerCase().split(' ').forEach(e => { newMailId += e;});
-    this.userDetailsList.forEach(element => {
-      if(element.name.toLowerCase() == name.toLowerCase() || element.email.includes(newMailId + "@locusnine.com")){
-        pervMailId = element.email.split('@')[0].toLowerCase();
-        newMailId = "";
-        name.toLowerCase().split(' ').forEach(e => { newMailId += e;});
-        let pos = pervMailId.split(newMailId)[1];
-        let num: number;
-        if(Number(pos) > max){
-          max = Number(pos);
-        }
-        if(pos != ''){
-          num = Number(pos) + 1;
-          newMailId += num;
+    let newMailIdKey = "";
+    name.toLowerCase().split(' ').forEach(e => { newMailIdKey += e;});
+    for(let userDetails of this.userDetailsList) {
+      if(userDetails.name.toLowerCase() == name.toLowerCase() || userDetails.email.includes(newMailIdKey + "@locusnine.com")){
+        let pos = userDetails.email.split('@')[0].toLowerCase().split(newMailIdKey)[1];
+        if(pos == ''){
+          newMailIdKey += 1;         
         }else{
-          if(max > 0){
-            max++;
-            newMailId += String(max);
-          }else{
-            newMailId += 1;
-          }
+          newMailIdKey += Number(pos) + 1;
         }
+        break;
       }
-    });
-    newMailId += "@locusnine.com";
-    return newMailId;
+    }
+    return newMailIdKey + '@locusnine.com';
   }
 
   initiateUpdateUserDetails(id: number){
