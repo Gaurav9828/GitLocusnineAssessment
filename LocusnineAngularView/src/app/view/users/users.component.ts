@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 import { UserDetails } from 'src/app/model/user-details';
 import { UserService } from 'src/app/service/user.service';
 import *  as  messageData from 'src/assets/JSON/messages.json';
