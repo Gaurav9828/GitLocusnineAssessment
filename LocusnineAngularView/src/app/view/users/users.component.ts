@@ -22,6 +22,7 @@ export class UsersComponent implements OnInit {
   private message: any = (messageData as any).default;
   successMessage = '';
   errorMessage = '';
+  mobileNumberPattern =  "^[0-9_-]{10,12}";
   public maxSize: number = 7;
   public directionLinks: boolean = true;
   public autoHide: boolean = false;
@@ -35,7 +36,7 @@ export class UsersComponent implements OnInit {
   };
 
   config = {
-    itemsPerPage: 8,
+    itemsPerPage: 9,
     currentPage: 1,
     totalItems: this.userDetailsList.length
   };
@@ -83,10 +84,18 @@ export class UsersComponent implements OnInit {
     this.newUserForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.email],
-      mobileNumber: [],
+      mobileNumber: ['', Validators.pattern(this.mobileNumberPattern)],
       roleType: ['', Validators.required],
       status: ['A']
     });
+  }
+
+  checkMobileNumberValidity(min: number, max: number){
+    if(min == 0 || max == 10){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   addUserConfirmation(newUserForm) {
@@ -132,9 +141,9 @@ export class UsersComponent implements OnInit {
       if (element.id == id) {
         this.newUserForm = this.formBuilder.group({
           id: [element.id],
-          name: [element.name],
+          name: [element.name, Validators.required],
           email: [element.email],
-          mobileNumber: [element.mobileNumber],
+          mobileNumber: [element.mobileNumber, Validators.pattern(this.mobileNumberPattern)],
           roleType: [element.roleType],
           status: [element.status]
         });

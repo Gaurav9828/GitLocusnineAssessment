@@ -73,8 +73,8 @@
             </tr>
             <tr>
                 <td colspan="5" class="text-center">
-                    <pagination-controls [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide"
-                    [responsive]="responsive" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                    <pagination-controls [maxSize]="maxSize" [autoHide]="autoHide"[responsive]="responsive" 
+                    [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
                     [screenReaderPageLabel]="labels.screenReaderPageLabel"
                     [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)">
                 </pagination-controls>
@@ -127,15 +127,16 @@
 
                         <div class="col-md-12">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="number"
+                                <input type="text"
                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                    type="number" maxlength="10" formControlName="mobileNumber" class="form-control"
+                                    maxlength="10" formControlName="mobileNumber" class="form-control"
                                     placeholder="Mobile Number (Optional)"
-                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.mobileNumber.errors }" />
+                                    [ngClass]="{ 'is-invalid': submitted && newUserFormValues.mobileNumber.errors }" >
                             </div>
                         </div>
                         <div class="col-md-12" *ngIf="!newUserFormValues.name.errors &&
-                                                      !newUserFormValues.roleType.errors">
+                                                      !newUserFormValues.roleType.errors &&
+                                                      !newUserFormValues.mobileNumber.errors">
                             <div class="input-group input-group-sm mb-3">
                                 <button class="btn btn-warning btn-lg btn-block" type="submit" data-toggle="modal"
                                     data-target="#confirmation">
@@ -200,9 +201,9 @@
 
                         <div class="col-md-12">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="number"
+                                <input type="text"
                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                    type="number" maxlength="10" formControlName="mobileNumber" class="form-control"
+                                    maxlength="10" formControlName="mobileNumber" class="form-control"
                                     placeholder="Mobile Number (Optional)"
                                     [ngClass]="{ 'is-invalid': submitted && newUserFormValues.mobileNumber.errors }" />
                             </div>
@@ -218,7 +219,7 @@
                             </div>
                         </div>
                         <div class="col-md-12" *ngIf="!newUserFormValues.name.errors &&
-                        !newUserFormValues.email.errors &&
+                        !newUserFormValues.mobileNumber.errors &&
                         !newUserFormValues.roleType.errors">
                             <div class="input-group input-group-sm mb-3">
                                 <button class="btn btn-warning btn-lg btn-block" type="submit" data-toggle="modal"

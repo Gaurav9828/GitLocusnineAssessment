@@ -8,6 +8,7 @@
     "add.user.failed": "Add User Failed! Please try again.",
 
     "user.already.exist" : "Add User Failed! User already exist.",
+    "mobile.number.length":"Please enter a 10 digit mobile number",
 
     "server.error": "Server error occurred."
 }
